@@ -1,0 +1,13 @@
+All error codes of this tiny framework
+
+CODE   |   MESSAGE
+-----------------------------------------------------------------------------------------------------------------------
+1      |   ERROR - No <autoloaderFile> found in <config> dir
+2      |   ERROR - Autoload <file> file not found
+3      |   ERROR - Route <routeName> not found
+4      |   ERROR - "url" param not found for route <routeName>
+5      |   ERROR - "Module" param not found for route <routeName>
+6      |   ERROR - "Controller" param not found for route <routeName>
+7      |   ERROR - "Action" param not found for route <routeName>
+8      |   ERROR - Parameter <param> not found for route <routeName>
+9      |   ERROR - Controller <controllerPath> file not found
