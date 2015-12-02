@@ -29,12 +29,15 @@ class Application
             $this->router = new Router();
         }
 
-        //checl if layout class exists
+        //check if layout class exists
         if (class_exists('core\Layout')) {
             $this->layout = new Layout();
         }
     }
 
+    /**
+     * Start the application
+     */
     public function start()
     {
         //match the current route
@@ -50,11 +53,19 @@ class Application
                 $_GET = array_merge($_GET, $route['params']);
             }
 
-            //render the action
-            $this->renderAction($route);
-
-            //load the correct configured layout
-            $this->layout->loadLayout($route);
+            switch ($this->renderAction($route)) {
+                default:
+                case View::HTML:
+                    $this->layout->loadLayout($route);
+                    break;
+                case View::JSON:
+                    //serve the json value
+                    header('Cache-Control: no-cache, must-revalidate');
+                    header('Expires: Mon, 08 Jul 1985 19:05:00 GMT');
+                    header('Content-type: application/json');
+                    exit(self::$action);
+                    break;
+            }
         }
     }
 
@@ -71,13 +82,15 @@ class Application
             $class = $this->loadControllerClass($route['route']['Module'], $route['route']['Controller']);
             //execute the action
             ob_start();
-            $class->{$route['route']['Action'] . 'Action'}();
+            $viewClass = $class->{$route['route']['Action'] . 'Action'}();
             Application::$action = ob_get_clean();
         } catch (\Exception $e) {
             echo $e->getCode() . ' - ' . $e->getMessage();
             Debug::dump($e->getTraceAsString());
             exit;
         }
+
+        return isset($viewClass) ? $viewClass->getRenderType() : View::HTML;
     }
 
     /**
@@ -112,6 +125,7 @@ class Application
     {
         return $this->router;
     }
+
 
     /**
      * Do an autoloader with config params

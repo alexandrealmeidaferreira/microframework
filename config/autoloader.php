@@ -11,5 +11,7 @@ return array(
     'core/Debug.php',
     'core/Router.php',
     'core/Layout.php',
+    'core/Controller.php',
+    'core/View.php'
 
 );

@@ -9,14 +9,40 @@
 namespace Index\Controllers;
 
 
+use core\Controller;
 use core\Debug;
+use core\View;
 
-class IndexController
+class IndexController extends Controller
 {
 
     public function indexAction()
     {
-        echo "I am in the index!!";
-        Debug::dump($_GET);
+
+        return new View(array(
+            'variable1' => 'v1',
+            'variable2' => 'v2'
+        ));
+    }
+
+    public function libraryAction()
+    {
+        return new View();
+    }
+
+
+    /**
+     * Action for test json functionality
+     *
+     * @return View
+     */
+    public function jsonTestAction()
+    {
+
+        return new View(array(
+            'variable1' => 'v1',
+            'variable2' => 'v2',
+            'jsonValue' => 'okey!'
+        ), View::JSON);
     }
 }
