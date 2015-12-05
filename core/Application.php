@@ -104,7 +104,7 @@ class Application
     private function loadControllerClass($module, $controller)
     {
         $controller_namespace = $module . '\Controllers';
-        $controller_path = MODULES_DIR . $module . DIRECTORY_SEPARATOR . 'Controllers' . DIRECTORY_SEPARATOR . $controller . 'Controller.php';
+        $controller_path = MODULES_DIR . $module . DS . 'Controllers' . DS . $controller . 'Controller.php';
         $class_name = $controller_namespace . '\\' . $controller . 'Controller';
         if (is_file($controller_path)) {
             include $controller_path;

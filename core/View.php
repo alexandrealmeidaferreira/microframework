@@ -45,7 +45,7 @@ class View
 
     private function loadView()
     {
-        $view = MODULES_DIR . $_GET['Module'] . DIRECTORY_SEPARATOR . 'Views' . DIRECTORY_SEPARATOR . $_GET['Controller'] . DIRECTORY_SEPARATOR . $_GET['Action'] . '.phtml';
+        $view = MODULES_DIR . $_GET['Module'] . DS . 'Views' . DS . $_GET['Controller'] . DS . $_GET['Action'] . '.phtml';
         if (is_file($view)) {
             include $view;
         } else {
