@@ -17,9 +17,13 @@ class View
     const JSON = 2;
 
     private $renderType;
+    private $router;
 
     public function __construct($params = array(), $type = self::HTML, $customView = '')
     {
+        //router instance
+        $this->router = new Router();
+
         $this->renderType = $type;
         switch ($type) {
             default:
@@ -56,5 +60,13 @@ class View
     public function getRenderType()
     {
         return $this->renderType;
+    }
+
+    /**
+     * @return Router
+     */
+    public function getRouter()
+    {
+        return $this->router;
     }
 }

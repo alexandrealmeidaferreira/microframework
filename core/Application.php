@@ -73,6 +73,7 @@ class Application
      * Init the controller and execute the action
      *
      * @param $route
+     * @return int
      */
     private function renderAction($route)
     {
