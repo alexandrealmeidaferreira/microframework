@@ -18,7 +18,7 @@ class View
 
     private $renderType;
 
-    public function __construct($params = array(), $type = self::HTML)
+    public function __construct($params = array(), $type = self::HTML, $customView = '')
     {
         $this->renderType = $type;
         switch ($type) {
@@ -32,7 +32,7 @@ class View
                 }
 
                 //load the view
-                $this->loadView();
+                $this->loadView($customView);
                 break;
             case self::JSON;
                 //if json just spit back the string in json format
@@ -43,9 +43,9 @@ class View
     }
 
 
-    private function loadView()
+    private function loadView($customView = '')
     {
-        $view = MODULES_DIR . $_GET['Module'] . DS . 'Views' . DS . $_GET['Controller'] . DS . $_GET['Action'] . '.phtml';
+        $view = (empty($customView)) ? MODULES_DIR . $_GET['Module'] . DS . 'Views' . DS . $_GET['Controller'] . DS . $_GET['Action'] . '.phtml' : $customView;
         if (is_file($view)) {
             include $view;
         } else {
