@@ -27,7 +27,7 @@ class Router
             self::$_instance = new self;
 
             //get the routes
-            if (is_file(CONFIG_DIR . self::$routeFile)) {
+            if (is_file(CONFIG_DIR . self::$routeFile) && empty(self::$routes)) {
                 self::$routes = include CONFIG_DIR . self::$routeFile;
             }
         }
