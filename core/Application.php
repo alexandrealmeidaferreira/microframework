@@ -55,7 +55,7 @@ class Application
                 case View::JSON:
                     //serve the json value
                     header('Cache-Control: no-cache, must-revalidate');
-                    header('Expires: Mon, 08 Jul 1985 19:05:00 GMT');
+                    header('Expires: Mon, 08 Jul 1985 19:15:00 GMT');
                     header('Content-type: application/json');
                     exit(self::$action);
                     break;
