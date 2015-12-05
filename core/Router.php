@@ -36,7 +36,7 @@ class Router
     }
 
     /**
-     * Match a route from parameter $route or try to get from $_GET['route']
+     * Match a route from parameter $route or try to get from $_SERVER['REQUEST_URI']
      *
      * @param string $route
      * @return array|bool
@@ -117,20 +117,26 @@ class Router
      */
     public static function routeToUrl($routeName, $params = array())
     {
-        $route = self::check($routeName, $params);
-        $url[] = $route['url'];
-        if (isset($route['params'])) {
-            foreach ($route['params'] as $index => $value) {
-                if (!empty($params[$index])) { //try passed params values
-                    $url[] = $index;
-                    $url[] = $params[$index];
-                } else if (!empty($value)) { //try default route values
-                    $url[] = $index;
-                    $url[] = $value;
+        try {
+            $route = self::check($routeName, $params);
+            if ($route) {
+                $url[] = $route['url'];
+                if (isset($route['params'])) {
+                    foreach ($route['params'] as $index => $value) {
+                        if (!empty($params[$index])) { //try passed params values
+                            $url[] = $index;
+                            $url[] = $params[$index];
+                        } else if (!empty($value)) { //try default route values
+                            $url[] = $index;
+                            $url[] = $value;
+                        }
+                    }
                 }
+                return implode('/', $url);
             }
+        } catch (\Exception $e) {
+            //route not found
         }
-        return implode('/', $url);
     }
 
     /**

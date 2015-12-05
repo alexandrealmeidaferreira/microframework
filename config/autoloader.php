@@ -8,6 +8,7 @@
  */
 
 return array(
+    //MicroFramework core
     'core/Debug.php',
     'core/Router.php',
     'core/Layout.php',
