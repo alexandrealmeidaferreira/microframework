@@ -13,7 +13,6 @@ namespace core;
 class Application
 {
     private $autoloaderFile = 'autoloader.php';
-    private $router;
     private $layout;
     private static $action;
 
@@ -22,11 +21,6 @@ class Application
         //inits automatically the autoloader, it can be disabled
         if ($autoInitAutoLoader) {
             $this->initAutoLoader();
-        }
-
-        //check if loader exists
-        if (class_exists('core\Router')) {
-            $this->router = new Router();
         }
 
         //check if layout class exists
@@ -41,7 +35,7 @@ class Application
     public function start()
     {
         //match the current route
-        $route = $this->router->matchRoute();
+        $route = Router::getInstance()->matchRoute();
         if ($route) {
             //rewrite the GET
             $_GET = array(
@@ -115,18 +109,6 @@ class Application
         }
         return $class;
     }
-
-
-    /**
-     * Return the router instance
-     *
-     * @return Router
-     */
-    public function getRouter()
-    {
-        return $this->router;
-    }
-
 
     /**
      * Do an autoloader with config params

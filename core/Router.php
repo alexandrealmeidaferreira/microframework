@@ -1,6 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Router class
+ *
  * User: alexandre
  * Date: 29/11/15
  * Time: 15:18
@@ -11,15 +12,27 @@ namespace core;
 
 class Router
 {
-    private $routeFile = 'routes.php';
-    private $routes = array();
+    private static $routeFile = 'routes.php';
+    private static $routes = array();
+    private static $_instance;
 
-
-    public function __construct()
+    /**
+     * Init the router and returns it
+     *
+     * @return Router
+     */
+    public static function getInstance()
     {
-        if (is_file(CONFIG_DIR . $this->routeFile)) {
-            $this->routes = include CONFIG_DIR . $this->routeFile;
+        if (self::$_instance === null) {
+            self::$_instance = new self;
+
+            //get the routes
+            if (is_file(CONFIG_DIR . self::$routeFile)) {
+                self::$routes = include CONFIG_DIR . self::$routeFile;
+            }
         }
+
+        return self::$_instance;
     }
 
     /**
@@ -28,7 +41,7 @@ class Router
      * @param string $route
      * @return array|bool
      */
-    public function matchRoute($route = '')
+    public static function matchRoute($route = '')
     {
         $return = false;
 
@@ -39,9 +52,9 @@ class Router
 
         //if has route
         if (!empty($route)) {
-            if (!empty($this->routes)) {
+            if (!empty(self::$routes)) {
                 $found = false;
-                foreach ($this->routes as $routeName => $routeArray) {
+                foreach (self::$routes as $routeName => $routeArray) {
                     $searchRoute = $routeArray['url'];
                     if (strpos($route, $searchRoute) === 0) {
                         $found = true;
@@ -73,11 +86,11 @@ class Router
      * @param array $params
      * @param bool $permanent
      */
-    public function redirect($routeName, $params = array(), $permanent = false)
+    public static function redirect($routeName, $params = array(), $permanent = false)
     {
         $url = $routeName;
-        if (isset($this->routes[$routeName])) {
-            $url = $this->routeToUrl($routeName, $params);
+        if (isset(self::$routes[$routeName])) {
+            $url = self::routeToUrl($routeName, $params);
         }
 
         if (headers_sent()) {//if header alread sent do a ugly js redirect, with no script option to browser with no js support
@@ -102,9 +115,9 @@ class Router
      * @return string url
      * @throws \Exception
      */
-    public function routeToUrl($routeName, $params = array())
+    public static function routeToUrl($routeName, $params = array())
     {
-        $route = $this->check($routeName, $params);
+        $route = self::check($routeName, $params);
         $url[] = $route['url'];
         if (isset($route['params'])) {
             foreach ($route['params'] as $index => $value) {
@@ -128,11 +141,11 @@ class Router
      * @param array $params
      * @return bool
      */
-    public function isValid($routeName, $params = array())
+    public static function isValid($routeName, $params = array())
     {
         $valid = true;
         try {
-            $this->check($routeName, $params);
+            self::check($routeName, $params);
         } catch (\Exception $e) {
             $valid = false;
         }
@@ -148,22 +161,22 @@ class Router
      * @return mixed
      * @throws \Exception
      */
-    public function check($routeName, $params = array())
+    public static function check($routeName, $params = array())
     {
-        if (isset($this->routes[$routeName])) {
-            if (isset($this->routes[$routeName]['url'])) {
-                if (isset($this->routes[$routeName]['Module'])) {
-                    if (isset($this->routes[$routeName]['Controller'])) {
-                        if (isset($this->routes[$routeName]['Action'])) {
+        if (isset(self::$routes[$routeName])) {
+            if (isset(self::$routes[$routeName]['url'])) {
+                if (isset(self::$routes[$routeName]['Module'])) {
+                    if (isset(self::$routes[$routeName]['Controller'])) {
+                        if (isset(self::$routes[$routeName]['Action'])) {
                             //check parameters passed (only if configured)
-                            if (!empty($params) && isset($this->routes[$routeName]['params'])) {
+                            if (!empty($params) && isset(self::$routes[$routeName]['params'])) {
                                 foreach ($params as $index => $value) {
-                                    if (!isset($this->routes[$routeName]['params'][$index])) {
+                                    if (!isset(self::$routes[$routeName]['params'][$index])) {
                                         throw new \Exception('ERROR - Parameter "' . $index . '" not found for route "' . $routeName . '"', 8);
                                     }
                                 }
                             }
-                            return $this->routes[$routeName];
+                            return self::$routes[$routeName];
                         } else {
                             throw new \Exception('ERROR - "Action" param not found for route "' . $routeName . '"', 7);
                         }
