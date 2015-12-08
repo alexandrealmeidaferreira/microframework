@@ -45,9 +45,10 @@ class Router
     {
         $return = false;
 
+        $request_uri = str_replace('?', '', $_SERVER['REQUEST_URI']);
         //try to get route if none passed as parameter
-        if (empty($route) && !empty($_SERVER['REQUEST_URI'])) {
-            $route = $_SERVER['REQUEST_URI'];
+        if (empty($route) && !empty($request_uri)) {
+            $route = $request_uri;
         }
 
         //if has route
