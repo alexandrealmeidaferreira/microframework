@@ -7,19 +7,24 @@ E-mail: alexandrealmeidaferreira@gmail.com
 
 CHANGE LOG
 -------------------------------------
+2015-12-09 - version 0.2
+Added /core/Db.php
+Added /config/*.database.php
+
+Db add a pool of PDO connections
+--------------------------------------
 2015-12-01 - version 0.1
 Added /core/View.php
-
+--------------------------------------
 2015-11-29 - version 0.1
 Started the project
 Created /index.php
-Created config/routes.php
-Created config/autoloader.php
-Created core/Application.php
-Created core/Debug.php
-Created core/Router.php
+Created /config/routes.php
+Created /config/autoloader.php
+Created /core/Application.php
+Created /core/Debug.php
+Created /core/Router.php
 
 Application add a simple autoloader
 Router add a simple router
 Debug add a simple debug
-

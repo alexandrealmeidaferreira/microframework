@@ -9,6 +9,7 @@
 
 return array(
     //MicroFramework core
+    'core/Db.php',
     'core/Debug.php',
     'core/Router.php',
     'core/Layout.php',

@@ -2,8 +2,10 @@ All error codes of this tiny framework
 
 CODE   |   MESSAGE
 -----------------------------------------------------------------------------------------------------------------------
+core/Application.php
 1      |   ERROR - No <autoloaderFile> found in <config> dir
 2      |   ERROR - Autoload <file> file not found
+core/Router.php
 3      |   ERROR - Route <routeName> not found
 4      |   ERROR - "url" param not found for route <routeName>
 5      |   ERROR - "Module" param not found for route <routeName>
@@ -11,3 +13,10 @@ CODE   |   MESSAGE
 7      |   ERROR - "Action" param not found for route <routeName>
 8      |   ERROR - Parameter <param> not found for route <routeName>
 9      |   ERROR - Controller <controllerPath> file not found
+core/Db.php
+10     |   ERROR - Empty database config file.
+11     |   ERROR - Connection <connectionName> not found.
+12     |   ERROR - "dsn" parameter not found.
+13     |   ERROR - "user" parameter not found.
+14     |   ERROR - "pass" parameter not found.
+15     |   ERROR - Could not connect to database.
