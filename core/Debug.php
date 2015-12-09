@@ -12,13 +12,13 @@ namespace core;
 class Debug
 {
     /**
-     * Simple dump variables
+     * Simple dump variables with print_r
      *
      * @param $var
      * @param bool|false $return
      * @return mixed
      */
-    public static function dump($var, $return = false)
+    public static function print_r($var, $return = false)
     {
         $dump = print_r($var, true);
         if ($return) {
@@ -28,5 +28,17 @@ class Debug
             echo $dump;
             echo "</pre>";
         }
+    }
+
+    /**
+     * Dump with var_dump
+     *
+     * @param $var
+     */
+    public static function dump($var)
+    {
+        echo "<pre>";
+        var_dump($var);
+        echo "</pre>";
     }
 }
