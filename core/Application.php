@@ -13,7 +13,6 @@ namespace core;
 class Application
 {
     private $autoloaderFile = 'autoloader.php';
-    private $layout;
     private static $action;
 
     public function __construct($autoInitAutoLoader = true)
@@ -21,11 +20,6 @@ class Application
         //inits automatically the autoloader, it can be disabled
         if ($autoInitAutoLoader) {
             $this->initAutoLoader();
-        }
-
-        //check if layout class exists
-        if (class_exists('core\Layout')) {
-            $this->layout = new Layout();
         }
     }
 
@@ -50,7 +44,7 @@ class Application
             switch ($this->renderAction($route)) {
                 default:
                 case View::HTML:
-                    $this->layout->loadLayout($route);
+                    Layout::getInstance()->loadLayout($route);
                     break;
                 case View::JSON:
                     //serve the json value

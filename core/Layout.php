@@ -1,6 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Controls all layouts
+ *
  * User: alexandre
  * Date: 30/11/15
  * Time: 19:51
@@ -11,41 +12,54 @@ namespace core;
 
 class Layout
 {
-    private $layoutFile = 'layout.php';
-    private $layouts;
+    private static $layoutFile = 'layout.php';
+    private static $layouts;
+    private static $_instance;
+    private static $js = array();
+    private static $css = array();
 
-    public function __construct()
+    /**
+     * @return Layout
+     */
+    public static function getInstance()
     {
-        if (is_file(CONFIG_DIR . $this->layoutFile)) {
-            $this->layouts = include CONFIG_DIR . $this->layoutFile;
+        if (self::$_instance === null) {
+            self::$_instance = new self;
+
+            //get the routes
+            if (is_file(CONFIG_DIR . self::$layoutFile) && empty(self::$layouts)) {
+                self::$layouts = include CONFIG_DIR . self::$layoutFile;
+            }
         }
+
+        return self::$_instance;
     }
 
-    public function loadLayout($route = false)
+    public static function loadLayout($route = false)
     {
         $layout = '';
         if ($route) {
             if (is_array($route)) {
                 //check if has default layout for application
-                if (isset($this->layouts['layout']) && is_file($this->layouts['layout'])) {
-                    $layout = $this->layouts['layout'];
+                if (isset(self::$layouts['layout']) && is_file(self::$layouts['layout'])) {
+                    $layout = self::$layouts['layout'];
                 }
                 //check if modules array exists
-                if (isset($this->layouts['Modules'])) {
+                if (isset(self::$layouts['Modules'])) {
                     //check if module of route has configuration
-                    if (isset($this->layouts['Modules'][$route['route']['Module']])) {
+                    if (isset(self::$layouts['Modules'][$route['route']['Module']])) {
                         //check if has a layout for the module
-                        if (isset($this->layouts['Modules'][$route['route']['Module']]['layout']) && is_file($this->layouts['Modules'][$route['route']['Module']]['layout'])) {
-                            $layout = $this->layouts['Modules'][$route['route']['Module']]['layout'];
+                        if (isset(self::$layouts['Modules'][$route['route']['Module']]['layout']) && is_file(self::$layouts['Modules'][$route['route']['Module']]['layout'])) {
+                            $layout = self::$layouts['Modules'][$route['route']['Module']]['layout'];
                             //check if the controllers array exists
-                            if (isset($this->layouts['Modules'][$route['route']['Module']]['Controllers'])) {
+                            if (isset(self::$layouts['Modules'][$route['route']['Module']]['Controllers'])) {
                                 //check if controller has configuration
-                                if (isset($this->layouts['Modules'][$route['route']['Module']]['Controllers'][$route['route']['Controller']])) {
+                                if (isset(self::$layouts['Modules'][$route['route']['Module']]['Controllers'][$route['route']['Controller']])) {
                                     //check if the controller has layout
-                                    if (isset($this->layouts['Modules'][$route['route']['Module']]['Controllers'][$route['route']['Controller']]['layout'])
-                                        && is_file($this->layouts['Modules'][$route['route']['Module']]['Controllers'][$route['route']['Controller']]['layout'])
+                                    if (isset(self::$layouts['Modules'][$route['route']['Module']]['Controllers'][$route['route']['Controller']]['layout'])
+                                        && is_file(self::$layouts['Modules'][$route['route']['Module']]['Controllers'][$route['route']['Controller']]['layout'])
                                     ) {
-                                        $layout = $this->layouts['Modules'][$route['route']['Module']]['Controllers'][$route['route']['Controller']]['layout'];
+                                        $layout = self::$layouts['Modules'][$route['route']['Module']]['Controllers'][$route['route']['Controller']]['layout'];
                                     }
                                 }
                             }
@@ -59,8 +73,70 @@ class Layout
         }
 
         //after all validation has a layout? then include safety
-        if(!empty($layout)){
+        if (!empty($layout)) {
             include $layout;
         }
+    }
+
+    /**
+     * Append a js to layout
+     *
+     * @param $js
+     * @return Layout
+     */
+    public static function appendJs($js)
+    {
+        if (is_array($js)) {
+            self::$js = array_merge(self::$js, $js);
+        } else {
+            self::$js[] = $js;
+        }
+
+        return self::$_instance;
+    }
+
+    /**
+     * Return all javascripts
+     *
+     * @return string
+     */
+    public static function outputJavascript()
+    {
+        $arr = array();
+        foreach (self::$js as $js) {
+            $arr[] = '<script src="' . $js . '"></script>';
+        }
+        return implode("\n", $arr);
+    }
+
+    /**
+     * Append a css to layout
+     *
+     * @param $css
+     * @return Layout
+     */
+    public static function appendCss($css)
+    {
+        if (is_array($css)) {
+            self::$css = array_merge(self::$css, $css);
+        } else {
+            self::$css[] = $css;
+        }
+
+        return self::$_instance;
+    }
+
+    /**
+     * Return all stylesheets
+     *
+     * @return string
+     */
+    public static function outputStylesheet()
+    {
+        $arr = array();
+        foreach (self::$css as $css) {
+            $arr[] = '<link rel="stylesheet" href="' . $css . '">';
+        }
+        return implode("\n", $arr);
     }
 }
