@@ -44,8 +44,8 @@ class Router
     public static function matchRoute($route = '')
     {
         $return = false;
-
         $request_uri = str_replace('?', '', $_SERVER['REQUEST_URI']);
+
         //try to get route if none passed as parameter
         if (empty($route) && !empty($request_uri)) {
             $route = $request_uri;
@@ -57,7 +57,7 @@ class Router
                 $found = false;
                 foreach (self::$routes as $routeName => $routeArray) {
                     $searchRoute = $routeArray['url'];
-                    if (strpos($route, $searchRoute) === 0) {
+                    if (strpos($searchRoute, $route) === 0) {
                         $found = true;
                         break;//stops search
                     }
