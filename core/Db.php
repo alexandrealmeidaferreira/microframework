@@ -18,7 +18,7 @@ class Db
 
     /**
      * Get a connection from pool
-     * 
+     *
      * @param string $connection
      * @return \PDO
      * @throws \Exception
@@ -32,7 +32,6 @@ class Db
         //get the connections
         if (is_file(CONFIG_DIR . $configFile) && empty(self::$config)) {
             self::$config = include CONFIG_DIR . $configFile;
-            echo 'getting the configs';
         }
 
         //if connection not exists then create it
@@ -46,7 +45,6 @@ class Db
                                 if (!isset(self::$config[$connection]['options'])) {
                                     self::$config[$connection]['options'] = array();
                                 }
-                                echo 'creating pdo connection';
                                 //create the connection
                                 try {
                                     self::$pool[$connection] = new \PDO(
