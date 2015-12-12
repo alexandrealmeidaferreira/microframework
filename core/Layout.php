@@ -87,7 +87,7 @@ class Layout
     public static function appendJs($js)
     {
         if (is_array($js)) {
-            self::$js = array_merge(self::$js, $js);
+            self::$js = array_merge($js, self::$js);
         } else {
             self::$js[] = $js;
         }
@@ -118,7 +118,7 @@ class Layout
     public static function appendCss($css)
     {
         if (is_array($css)) {
-            self::$css = array_merge(self::$css, $css);
+            self::$css = array_merge($css, self::$css);
         } else {
             self::$css[] = $css;
         }
