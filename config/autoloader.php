@@ -1,6 +1,8 @@
 <?php
 /**
  * Auto load paths
+ * If path is a dir then it will be included in include path and autoload it
+ * If path is a file then it will be included at Application starts
  *
  * User: alexandre
  * Date: 29/11/15
@@ -9,11 +11,6 @@
 
 return array(
     //MicroFramework core
-    'core/Db.php',
-    'core/Debug.php',
-    'core/Router.php',
-    'core/Layout.php',
-    'core/Controller.php',
-    'core/View.php'
-
+    'core/',
+    'core/Model/'
 );

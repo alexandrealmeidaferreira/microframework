@@ -121,7 +121,10 @@ class Application
             $autoloader = include CONFIG_DIR . $this->autoloaderFile;
             if (!empty($autoloader)) {
                 foreach ($autoloader as $file) {
-                    if (is_file(ROOT_DIR . $file)) {
+                    if (is_dir(ROOT_DIR . $file)) {
+                        set_include_path(get_include_path() . PATH_SEPARATOR . ROOT_DIR . $file);
+                        spl_autoload_register(array($this, 'autoLoadDirectory'));
+                    } else if (is_file(ROOT_DIR . $file)) {
                         include ROOT_DIR . $file;
                     } else {
                         throw new \Exception('ERROR - Autoload "' . ROOT_DIR . $file . '" file not found', 2);
@@ -132,6 +135,16 @@ class Application
             throw new \Exception('ERROR No "' . $this->autoloaderFile . '" found in "' . CONFIG_DIR . '" dir', 1);
         }
     }
+
+    /**
+     * Used with spl_auto_loader
+     * @param $className
+     */
+    public function autoLoadDirectory($className)
+    {
+        include end(explode('\\', $className)) . '.php';
+    }
+
 
     public static function render()
     {
