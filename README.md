@@ -9,6 +9,8 @@ E-mail: alexandrealmeidaferreira@gmail.com
 Added /core/Model/SimpleObject.php   
 Improved auto load of classes, now is possible to set an path in config/autoloader.php   
 Improved Layout, now we can add css and javascript in code
+Improved View   
+Added js and css default files in public/<MODULE>/<CONTROLLER>/<ACTION>.{js, css}   
 
 ###2015-12-09
 Added /core/Db.php   
