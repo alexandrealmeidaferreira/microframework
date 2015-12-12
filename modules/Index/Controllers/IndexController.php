@@ -19,10 +19,7 @@ class IndexController extends Controller
     public function indexAction()
     {
 
-        return new View(array(
-            'variable1' => 'v1',
-            'variable2' => 'v2'
-        ));
+        return new View();
     }
 
     public function libraryAction()
@@ -39,10 +36,6 @@ class IndexController extends Controller
     public function jsonTestAction()
     {
 
-        return new View(array(
-            'variable1' => 'v1',
-            'variable2' => 'v2',
-            'jsonValue' => 'okey!'
-        ), View::JSON);
+        return new View();
     }
 }
