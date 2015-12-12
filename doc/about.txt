@@ -9,7 +9,7 @@ E-mail: alexandrealmeidaferreira@gmail.com
 Added /core/Model/SimpleObject.php
 Improved auto load of classes, now is possible to set an path in config/autoloader.php
 
-###2015-12-09 - version 0.2
+###2015-12-09
 Added /core/Db.php   
 Added /config/*.database.php   
 
@@ -19,7 +19,7 @@ Db add a pool of PDO connections
 Added /core/View.php   
 
 
-###2015-11-29 - version 0.1
+###2015-11-29
 Started the project   
 Created /index.php   
 Created /config/routes.php   
