@@ -4,24 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MicroFramework</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/css/index.css">
-    <script src="/js/jquery-2.1.4.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <?php
+    echo \core\Layout::appendCss(array(
+        '/css/bootstrap.min.css',
+        '/css/bootstrap-theme.min.css',
+        '/css/index.css'
+    ))->outputStylesheet();
+
+    echo \core\Layout::appendJs(array(
+        '/js/jquery-2.1.4.min.js',
+        '/js/bootstrap.min.js',
+        '/js/microframework.js',
+    ))->outputJavascript();
+    ?>
 </head>
 
 <body>
 
-<?php include ('layout/menu.phtml'); ?>
+<?php include('layout/menu.phtml'); ?>
 
 <div class="container">
-
-    <div class="starter-template">
-        <h1>Error 404 - Page not found</h1>
-        <?php echo \core\Application::render(); ?>
-    </div>
-
+    <h1>Error 404 - Page not found</h1>
+    <?php echo \core\Application::render(); ?>
 </div>
 </body>
 
