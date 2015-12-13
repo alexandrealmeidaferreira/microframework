@@ -73,7 +73,7 @@ class View
     {
         $js = $_GET['Module'] . '/' . $_GET['Controller'] . '/' . $_GET['Action'] . '.js';
         if (is_file(JS_DIR . $js))
-            Layout::appendJs('js/' . $js);
+            Layout::appendJs('/js/' . $js);
     }
 
     /**
@@ -83,7 +83,7 @@ class View
     {
         $css = $_GET['Module'] . DS . $_GET['Controller'] . DS . $_GET['Action'] . '.css';
         if (is_file(JS_DIR . $css))
-            Layout::appendJs('js/' . $css);
+            Layout::appendJs('/css/' . $css);
     }
 
     /**
