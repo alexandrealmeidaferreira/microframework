@@ -37,6 +37,30 @@ class SimpleObject
         return $array;
     }
 
+
+    /**
+     * Return array with index to use with PDO
+     *
+     * @param array $properties
+     * @return array
+     */
+    public function toArrayPDO($properties = array())
+    {
+        $array = array();
+
+        foreach ($this as $property => $value) {
+            if(!empty($properties)){
+                if(in_array($property, $properties)){
+                    $array[':' . $property] = $value;
+                }
+            }else{
+                $array[':' . $property] = $value;
+            }
+        }
+
+        return $array;
+    }
+
     /**
      * Set array values to the object
      *
@@ -44,9 +68,9 @@ class SimpleObject
      */
     public function fromArray($array = array())
     {
-        if(!empty($array)){
-            foreach($array as $property => $value){
-                if(property_exists($this, $property)){
+        if (!empty($array)) {
+            foreach ($array as $property => $value) {
+                if (property_exists($this, $property)) {
                     $this->{$property} = $value;
                 }
             }
