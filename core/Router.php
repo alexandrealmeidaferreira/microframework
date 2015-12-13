@@ -62,22 +62,37 @@ class Router
                         break;//stops search
                     }
                 }
-                //route found? lets get the params
-                if ($found) {
-                    $return = array('routeName' => $routeName, 'params' => array(), 'route' => $routeArray);
-                    $params = array();
-                    $tmp_params = array_chunk(array_filter(explode('/', str_replace($searchRoute, '', $route))), 2);
-                    if (!empty($tmp_params)) {
-                        foreach ($tmp_params as $value) {
-                            $params[$value[0]] = isset($value[1]) ? $value[1] : '';
-                        }
-                        //here we have the params
-                        $return['params'] = $params;
-                    }
-                }
+
+                //lets get the params
+                $return = array(
+                    'routeName' => $routeName,
+                    'params' => self::getRouteParams($route, $searchRoute),
+                    'route' => ($found) ? $routeArray : self::$routes['index-route']
+                );
             }
         }
         return $return;
+    }
+
+    /**
+     * Return params of route
+     *
+     * @param $route
+     * @param $searchRoute
+     * @return array
+     */
+    public static function getRouteParams($route, $searchRoute)
+    {
+        $params = array();
+        $tmp_params = array_chunk(array_filter(
+            explode('/', ($searchRoute == '/') ? $route : str_replace($searchRoute, '', $route))
+        ), 2);
+        if (!empty($tmp_params)) {
+            foreach ($tmp_params as $value) {
+                $params[$value[0]] = isset($value[1]) ? $value[1] : '';
+            }
+        }
+        return $params;
     }
 
     /**
