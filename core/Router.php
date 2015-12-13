@@ -200,4 +200,23 @@ class Router
             throw new \Exception('ERROR - Route "' . $routeName . '" not found', 3);
         }
     }
+
+    /**
+     * Check if passed route is the current route
+     *
+     * @param string $url
+     * @return bool
+     */
+    public static function isCurrentRoute($url = '')
+    {
+        $isCurrentRoute = false;
+        $route = self::matchRoute($url);
+        if ($route['route']['Module'] == $_GET['Module'] &&
+            $route['route']['Controller'] == $_GET['Controller'] &&
+            $route['route']['Action'] == $_GET['Action']
+        ) {
+            $isCurrentRoute = true;
+        }
+        return $isCurrentRoute;
+    }
 }

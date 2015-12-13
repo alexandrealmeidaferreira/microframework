@@ -12,9 +12,15 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="/library">Library</a></li>
-                <li><a href="/config">Config</a></li>
+                <li <?php echo (core\Router::getInstance()->isCurrentRoute('/home')) ? 'class="active"' : ''; ?>>
+                    <a href="/">Home</a>
+                </li>
+                <li <?php echo (core\Router::getInstance()->isCurrentRoute('/library')) ? 'class="active"' : ''; ?>>
+                    <a href="/library">Library</a>
+                </li>
+                <li <?php echo (core\Router::getInstance()->isCurrentRoute('/config')) ? 'class="active"' : ''; ?>>
+                    <a href="/config">Config</a>
+                </li>
             </ul>
         </div>
     </div>
