@@ -14,6 +14,7 @@ class Layout
 {
     private static $layoutFile = 'layout.php';
     private static $layouts;
+    private static $disableLayout = array();
     private static $_instance;
     private static $js = array();
     private static $css = array();
@@ -35,6 +36,51 @@ class Layout
         return self::$_instance;
     }
 
+    /**
+     * Check if layout is disabled
+     *
+     * @param $module
+     * @param $controlller
+     * @param $action
+     * @return bool
+     */
+    public static function isDisabled($module, $controlller, $action)
+    {
+        return in_array($module . '/' . $controlller . '/' . $action, self::$disableLayout);
+    }
+
+    /**
+     * Disable layout
+     *
+     * @param $module
+     * @param $controlller
+     * @param $action
+     */
+    public static function setDisabledLayout($module, $controlller, $action)
+    {
+        self::$disableLayout[] = $module . '/' . $controlller . '/' . $action;
+    }
+
+    /**
+     * Reenable layout
+     *
+     * @param $module
+     * @param $controlller
+     * @param $action
+     */
+    public static function setEnabledLayout($module, $controlller, $action)
+    {
+        $layout = $module . '/' . $controlller . '/' . $action;
+        if (($key = array_search($layout, self::$disableLayout[$layout])) !== false) {
+            unset(self::$disableLayout[$key]);
+        }
+    }
+
+    /**
+     * Load layout
+     *
+     * @param bool|false $route
+     */
     public static function loadLayout($route = false)
     {
         $layout = '';

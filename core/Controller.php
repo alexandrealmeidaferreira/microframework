@@ -75,4 +75,18 @@ class Controller
     {
         return array_merge($this->getGet(), $this->getPost());
     }
+
+    /**
+     * Disable current layout
+     *
+     * @param bool|true $disable
+     */
+    public function disableLayout($disable = true)
+    {
+        if ($disable) {
+            Layout::getInstance()->setDisabledLayout($_GET['Module'], $_GET['Controller'], $_GET['Action']);
+        } else {
+            Layout::getInstance()->setEnabledLayout($_GET['Module'], $_GET['Controller'], $_GET['Action']);
+        }
+    }
 }

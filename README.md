@@ -5,6 +5,10 @@ Developer: Alexandre Almeida Ferreira
 E-mail: alexandrealmeidaferreira@gmail.com   
 
 ##CHANGE LOG
+###2015-12-19 - version 0.3
+Added support to disable layout in /core/Layout.php   
+Added disableLayout in Controller class, to disable layout in current action   
+
 ###2015-12-12 - version 0.2
 Added /core/Model/SimpleObject.php   
 Improved auto load of classes, now is possible to set an path in config/autoloader.php   

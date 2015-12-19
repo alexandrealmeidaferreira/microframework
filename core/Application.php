@@ -44,7 +44,13 @@ class Application
             switch ($this->renderAction($route)) {
                 default:
                 case View::HTML:
-                    Layout::getInstance()->loadLayout($route);
+                    //check if layout is not disabled
+                    if (!Layout::getInstance()->isDisabled($route['route']['Module'], $route['route']['Controller'], $route['route']['Action'])) {
+                        Layout::getInstance()->loadLayout($route);
+                    } else {
+                        //if disabled just show html
+                        echo self::$action;
+                    }
                     break;
                 case View::JSON:
                     //serve the json value
