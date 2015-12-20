@@ -6,7 +6,7 @@ $(document).ready(function () {
     /**
      * Transform the action into route
      */
-    $('form[method!=post], form[method!=POST]').submit(function () {
+    $('form[method!=post]').submit(function () {
         var action = $(this).attr('action');
         var params = $(this).serialize();
         $(this).children().removeAttr('name');
