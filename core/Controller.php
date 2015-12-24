@@ -89,4 +89,17 @@ class Controller
             Layout::getInstance()->setEnabledLayout($_GET['Module'], $_GET['Controller'], $_GET['Action']);
         }
     }
+
+    /**
+     * Redirect to an route, if routename not found redirect directly to it (assuming its an external url)
+     *
+     * @param $routeName
+     * @param array $params
+     * @param bool $permanent
+     */
+    public function redirect($routeName, $params = array(), $permanent = false)
+    {
+        Router::getInstance()->redirect($routeName, $params, $permanent);
+        exit;
+    }
 }

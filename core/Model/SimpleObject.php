@@ -37,7 +37,6 @@ class SimpleObject
         return $array;
     }
 
-
     /**
      * Return array with index to use with PDO
      *
@@ -49,16 +48,39 @@ class SimpleObject
         $array = array();
 
         foreach ($this as $property => $value) {
-            if(!empty($properties)){
-                if(in_array($property, $properties)){
+            if (!empty($properties)) {
+                if (in_array($property, $properties)) {
                     $array[':' . $property] = $value;
                 }
-            }else{
+            } else {
                 $array[':' . $property] = $value;
             }
         }
 
         return $array;
+    }
+
+    /**
+     * Return an string to SET for an update
+     *
+     * @param array $properties
+     * @return string
+     */
+    public function toSetUpdatePDO($properties = array())
+    {
+        $array = array();
+
+        foreach ($this as $property => $value) {
+            if (!empty($properties)) {
+                if (in_array($property, $properties)) {
+                    $array[] = $property . '=:' . $property;
+                }
+            } else {
+                $array[] = $property . '=:' . $property;
+            }
+        }
+
+        return implode(",\n", $array);
     }
 
     /**

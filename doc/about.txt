@@ -5,6 +5,10 @@ Developer: Alexandre Almeida Ferreira
 E-mail: alexandrealmeidaferreira@gmail.com   
 
 ##CHANGE LOG
+###2015-12-24 - version 0.3   
+Added redirect to Controller class   
+Added toSetUpdatePDO to SimpleObject to help create an UPDATE statement   
+
 ###2015-12-19 - version 0.3
 Added support to disable layout in /core/Layout.php   
 Added disableLayout in Controller class, to disable layout in current action   
