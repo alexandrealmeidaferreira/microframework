@@ -29,6 +29,11 @@ class Router
             //get the routes
             if (is_file(CONFIG_DIR . self::$routeFile) && empty(self::$routes)) {
                 self::$routes = include CONFIG_DIR . self::$routeFile;
+
+                //sort by lenght of route url
+                uasort(self::$routes, function ($a, $b) {
+                    return strlen($b['url']) - strlen($a['url']);
+                });
             }
         }
 
@@ -59,17 +64,17 @@ class Router
                 //search for a full route match
                 foreach (self::$routes as $routeName => $routeArray) {
                     $searchRoute = $routeArray['url'];
-                    if($searchRoute === $route){
+                    if ($searchRoute === $route) {
                         $found = true;
                         break;//stops search
                     }
                 }
 
                 //search for a partial route match
-                if(!$found){
+                if (!$found) {
                     foreach (self::$routes as $routeName => $routeArray) {
                         $searchRoute = $routeArray['url'];
-                        if (strpos($route,$searchRoute) === 0) {
+                        if (strpos($route, $searchRoute) === 0) {
                             $found = true;
                             break;//stops search
                         }
