@@ -18,18 +18,18 @@ class FlashMessage
 
     const DANGER = 'danger';
     const WARNING = 'warning';
-    const ALERT = 'alert';
+    const INFO = 'info';
     const SUCCESS = 'success';
 
-    const DANGER_TITLE = 'Danger!';
-    const WARNING_TITLE = 'Warning!';
-    const ALERT_TITLE = 'Alert!';
-    const SUCCESS_TITLE = 'Success!';
+    const DANGER_TITLE = 'Danger';
+    const WARNING_TITLE = 'Warning';
+    const INFO_TITLE = 'Info';
+    const SUCCESS_TITLE = 'Success';
 
     const DANGER_ICON = 'glyphicon glyphicon-exclamation-sign';
     const WARNING_ICON = 'glyphicon glyphicon-warning-sign';
-    const ALERT_ICON = 'glyphicon glyphicon-alert';
-    const SUCCESS_ICON = 'glyphicon glyphicon-ok';
+    const INFO_ICON = 'glyphicon glyphicon-info-sign';
+    const SUCCESS_ICON = 'glyphicon glyphicon-ok-sign';
 
 
     /**
@@ -101,12 +101,12 @@ class FlashMessage
                 }
 
                 break;
-            case self::ALERT:
-                $title = is_null($title) ? self::ALERT_TITLE : $title;
-                $icon = is_null($icon) ? self::SUCCESS_ICON : $icon;
-                if (!isset($this->messages[self::ALERT])) {
-                    $this->messages[self::ALERT] = array();
-                    $this->messages[self::ALERT][] = array(
+            case self::INFO:
+                $title = is_null($title) ? self::INFO_TITLE : $title;
+                $icon = is_null($icon) ? self::INFO_ICON : $icon;
+                if (!isset($this->messages[self::INFO])) {
+                    $this->messages[self::INFO] = array();
+                    $this->messages[self::INFO][] = array(
                         'title' => $title,
                         'message' => $message,
                         'icon' => $icon,
@@ -117,7 +117,7 @@ class FlashMessage
                 break;
             case self::WARNING:
                 $title = is_null($title) ? self::WARNING_TITLE : $title;
-                $icon = is_null($icon) ? self::SUCCESS_ICON : $icon;
+                $icon = is_null($icon) ? self::WARNING_ICON : $icon;
                 if (!isset($this->messages[self::WARNING])) {
                     $this->messages[self::WARNING] = array();
                     $this->messages[self::WARNING][] = array(
@@ -130,7 +130,7 @@ class FlashMessage
                 break;
             case self::DANGER:
                 $title = is_null($title) ? self::DANGER_TITLE : $title;
-                $icon = is_null($icon) ? self::SUCCESS_ICON : $icon;
+                $icon = is_null($icon) ? self::DANGER_ICON : $icon;
                 if (!isset($this->messages[self::DANGER])) {
                     $this->messages[self::DANGER] = array();
                     $this->messages[self::DANGER][] = array(
@@ -174,7 +174,7 @@ class FlashMessage
     }
 
     /**
-     * Add a alert message
+     * Add a info message
      *
      * @param string $message
      * @param string $title
@@ -182,9 +182,9 @@ class FlashMessage
      * @param string $icon
      * @return FlashMessage
      */
-    public function addAlert($message = '', $title = self::ALERT_TITLE, $timeout = 0, $icon = self::ALERT_TITLE)
+    public function addInfo($message = '', $title = self::INFO_TITLE, $timeout = 0, $icon = self::INFO_ICON)
     {
-        return $this->addMessage(self::ALERT, $message, $title, $timeout, $icon);
+        return $this->addMessage(self::INFO, $message, $title, $timeout, $icon);
     }
 
     /**
@@ -222,13 +222,13 @@ class FlashMessage
     }
 
     /**
-     * Check if has alert message
+     * Check if has info message
      *
      * @return bool
      */
-    public function hasAlert()
+    public function hasInfo()
     {
-        return (isset($this->messages[self::ALERT]) && !empty($this->messages[self::ALERT]));
+        return (isset($this->messages[self::INFO]) && !empty($this->messages[self::INFO]));
     }
 
     /**
@@ -248,7 +248,7 @@ class FlashMessage
      */
     public function hasMessages()
     {
-        return ($this->hasSuccess() || $this->hasAlert() || $this->hasDanger() || $this->hasWarning());
+        return ($this->hasSuccess() || $this->hasInfo() || $this->hasDanger() || $this->hasWarning());
     }
 
     /**
@@ -274,13 +274,13 @@ class FlashMessage
     }
 
     /**
-     * Clear alert message
+     * Clear info message
      *
      * @return $this
      */
-    public function clearAlertMessages()
+    public function clearInfoMessages()
     {
-        unset($this->messages[self::ALERT]);
+        unset($this->messages[self::INFO]);
         return $this;
     }
 
@@ -303,7 +303,7 @@ class FlashMessage
     public function clearMessages()
     {
         $this->clearSuccessMessages();
-        $this->clearAlertMessages();
+        $this->clearInfoMessages();
         $this->clearWarningMessages();
         $this->clearDangerMessages();
 
@@ -335,14 +335,14 @@ class FlashMessage
     }
 
     /**
-     * Return alert messages and clear
+     * Return info messages and clear
      *
      * @return mixed
      */
-    public function getAlertMessages()
+    public function getInfoMessages()
     {
-        $messages = $this->messages[self::ALERT];
-        $this->clearAlertMessages();
+        $messages = $this->messages[self::INFO];
+        $this->clearInfoMessages();
         return $messages;
     }
 
@@ -368,7 +368,7 @@ class FlashMessage
         $messages = $this->messages;
 
         $this->clearSuccessMessages();
-        $this->clearAlertMessages();
+        $this->clearInfoMessages();
         $this->clearWarningMessages();
         $this->clearDangerMessages();
 
