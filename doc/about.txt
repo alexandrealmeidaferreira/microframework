@@ -6,6 +6,10 @@ E-mail: alexandrealmeidaferreira@gmail.com
 
 ##CHANGE LOG
 ###2015-12-24 - version 0.3   
+Added /core/FlashMesseger.php it help to create messages between pages, can render in bootstrap alert format
+Added /js/microframework.js suport to auto close a alert message
+
+###2015-12-24 - version 0.3   
 Added redirect to Controller class   
 Added toSetUpdatePDO to SimpleObject to help create an UPDATE statement   
 
