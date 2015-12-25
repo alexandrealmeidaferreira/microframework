@@ -380,6 +380,10 @@ class FlashMessage
      */
     public function __destruct()
     {
-        $_SESSION[$this->namespace] = $this->messages;
+        if ($this->hasMessages()) {
+            $_SESSION[$this->namespace] = $this->messages;
+        } else {
+            unset($_SESSION[$this->namespace]);
+        }
     }
 }
