@@ -55,11 +55,24 @@ class Router
         if (!empty($route)) {
             if (!empty(self::$routes)) {
                 $found = false;
+
+                //search for a full route match
                 foreach (self::$routes as $routeName => $routeArray) {
                     $searchRoute = $routeArray['url'];
-                    if (strpos($searchRoute, $route) === 0) {
+                    if($searchRoute === $route){
                         $found = true;
                         break;//stops search
+                    }
+                }
+
+                //search for a partial route match
+                if(!$found){
+                    foreach (self::$routes as $routeName => $routeArray) {
+                        $searchRoute = $routeArray['url'];
+                        if (strpos($route,$searchRoute) === 0) {
+                            $found = true;
+                            break;//stops search
+                        }
                     }
                 }
 
@@ -71,6 +84,7 @@ class Router
                 );
             }
         }
+
         return $return;
     }
 
