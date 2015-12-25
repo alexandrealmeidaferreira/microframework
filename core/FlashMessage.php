@@ -60,7 +60,7 @@ class FlashMessage
             foreach ($allMessages as $type => $messages) {
                 foreach ($messages as $message) {
                     $timeout = ($message['timeout'] > 0) ? "data-dismiss-timeout=\"{$message['timeout']}\"" : '';
-                    $html[] = "<div class=\"alert alert-dismissable alert-{$type}\" {$timeout} >";
+                    $html[] = "<div class=\"alert alert-dismissable alert-{$type} fade in\" {$timeout} >";
                     $html[] = '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                     $html[] = !empty($message['icon']) ? "<span class=\"{$message['icon']}\" aria-hidden=\"true\"></span>" : '';
                     $html[] = !empty($message['title']) ? "<strong>{$message['title']}</strong>" : '';
