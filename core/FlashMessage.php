@@ -50,17 +50,19 @@ class FlashMessage
     /**
      * Returns all message in html format in bootstrap 3 alerts
      *
+     * @param bool $fadeOut
      * @return string
      */
-    public function render()
+    public function render($fadeOut = true)
     {
+        $fadeOut = ($fadeOut) ? 'fade in' : '';
         $html = array();
         if ($this->hasMessages()) {
             $allMessages = $this->getMessages();
             foreach ($allMessages as $type => $messages) {
                 foreach ($messages as $message) {
                     $timeout = ($message['timeout'] > 0) ? "data-dismiss-timeout=\"{$message['timeout']}\"" : '';
-                    $html[] = "<div class=\"alert alert-dismissable alert-{$type} fade in\" {$timeout} >";
+                    $html[] = "<div class=\"alert alert-dismissable alert-{$type} {$fadeOut}\" {$timeout} >";
                     $html[] = '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                     $html[] = !empty($message['icon']) ? "<span class=\"{$message['icon']}\" aria-hidden=\"true\"></span>" : '';
                     $html[] = !empty($message['title']) ? "<strong>{$message['title']}</strong>" : '';
