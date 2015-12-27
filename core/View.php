@@ -71,7 +71,7 @@ class View
      */
     private function loadJs()
     {
-        $js = $_GET['Module'] . '/' . $_GET['Controller'] . '/' . $_GET['Action'] . '.js';
+        $js = $_GET['Module'] . DS . $_GET['Controller'] . DS . $_GET['Action'] . '.js';
         if (is_file(JS_DIR . $js))
             Layout::appendJs('/js/' . $js);
     }
@@ -82,8 +82,8 @@ class View
     private function loadCss()
     {
         $css = $_GET['Module'] . DS . $_GET['Controller'] . DS . $_GET['Action'] . '.css';
-        if (is_file(JS_DIR . $css))
-            Layout::appendJs('/css/' . $css);
+        if (is_file(CSS_DIR . $css))
+            Layout::appendCss('/css/' . $css);
     }
 
     /**
